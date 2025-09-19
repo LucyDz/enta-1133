@@ -5,8 +5,10 @@ namespace GD14_1133_DiceGame_Lucy
     internal class Program
     {
         static void Main(string[] args)
-        {
-            GameManager.ProgramStart();
+
+        {// Created instance to call the game manager
+            GameManager manager = new GameManager();
+            manager.Play();
         }
     }
 }
