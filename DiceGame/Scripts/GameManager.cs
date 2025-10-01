@@ -6,64 +6,6 @@ using System.Threading.Tasks;
 
 namespace GD14_1133_DiceGame_Lucy.Scripts
 {
-    internal class Die
-    {
-        //creates a random instance so each roll is different
-        private Random random = new Random();
-        internal int d6() // rolls a d6 
-        {
-            return random.Next(1, 7);
-     
-        }
-        internal int d8() // rolls a d8 
-        {
-            return random.Next(1, 9);
-        }
-        internal int d12() // rolls a d12 
-        {
-            return random.Next(1, 13);
-        }
-        internal int d20() // rolls a d20
-        {
-            return random.Next(1, 21);
-        }
-
-    }
-
-
-    internal class Player
-    {
-        int playerScore; 
-        string playerName = "Player"; // sets player name to "Player" by default just to instantiate it out here
-        // wanted to bring this name so it could be put on the scoreboard at the end of a round but couldn't figure it out
-        internal string GetPlayerName()
-        {
-            
-
-            //ask player to enter name
-            Console.WriteLine("Please enter your name");
-
-            //player gives their name
-            playerName = Console.ReadLine();
-
-            Console.WriteLine("Alright " + playerName + ", Let's play!");
-
-            return playerName;
-        }
-
-        internal void InitializePlayerScore()
-        {
-            // set playerScore to 0 because they start with nothing
-            playerScore = 0;
-        }
-         
-        internal int FetchPlayerScore() // trying to make a way to bring the score to another Class
-        {
-            return playerScore;
-        }
-        // couldn't figure out how to make another GameManager Class call these scores and be able to add to them. So I just had different variables store the scores in the GameManager...
-    }
-
     internal class GameManager
     {
         //setting new player and cpu
@@ -71,16 +13,12 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
         Player cpu = new Player();
 
-        //making scores 0 here because I can't figure out how to summon the scores from Player Class
-        internal int cpuScore = 0;
-
-        internal int userScore = 0;
-       
         //created variable to store players roll
         int playerRoll = 0;
 
         //created variable to store cpu roll
         int cpuRoll = 0;
+
         internal void Play() 
         {
             //welcome message.
@@ -89,8 +27,6 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
             //calling function to get players info
             user.GetPlayerName();
-            user.InitializePlayerScore(); // these ended up not being used because I can't figure out how to call the score from Player to GameManager
-            cpu.InitializePlayerScore();  // these ended up not being used because I can't figure out how to call the score from Player to GameManager
             Coinflip();
         }
         internal int Coinflip() // decides who goes first
@@ -105,6 +41,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             int flipResult = flip.Next(0,2);
 
             
+
             //0 is heads so the GameManager calls the cpu turn first
             if (flipResult == 0)
             {
@@ -113,8 +50,8 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("");
                 Console.WriteLine("It's my turn first...");
                 CpuTurn();
-                Console.WriteLine("");
-                Console.WriteLine("It's now your turn...");
+                //Console.WriteLine("");
+                //Console.WriteLine("It's now your turn...");
                 PlayerTurn();
                 ScoreCheck();
             }
@@ -135,6 +72,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         }
         internal void PlayerTurn()
         {
+           
             //player gets dice options
             Console.WriteLine("");
             Console.WriteLine("Please choose a dice to roll");
@@ -228,29 +166,29 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             if (cpuRoll > playerRoll)
             {
                 cpu.FetchPlayerScore();// trying to fetch the scores from the Player Classes here but not sure what to do with them afterwards
-                cpuScore++; //just added to GameManager stored score instead
+                cpu.playerScore++; //just added to GameManager stored score instead
             }
             else if (cpuRoll < playerRoll)
             {
                 user.FetchPlayerScore();// trying to fetch the scores from the Player Classes here but not sure what to do with them afterwards
-                userScore++; //just added to GameManager stored score instead
+                user.playerScore++; //just added to GameManager stored score instead
             }
 
             //scoreboard display
             Console.WriteLine("");
             Console.WriteLine("=============================");
             Console.WriteLine("         SCOREBOARD          ");
-            Console.WriteLine("         Lucy: " + cpuScore);
-            Console.WriteLine("         You: " + userScore);
+            Console.WriteLine("         Lucy: " + cpu.playerScore);
+            Console.WriteLine("         You: " + user.playerScore);
             Console.WriteLine("=============================");
 
             //if statement to write a line depending on who won the round
-            if (cpuScore > userScore)
+            if (cpu.playerScore > user.playerScore)
             {
                 Console.WriteLine("");   
                 Console.WriteLine("Looks like I win this round!");
             }
-            else if (cpuScore < userScore)
+            else if (cpu.playerScore < user.playerScore)
             {
                 Console.WriteLine("");
                 Console.WriteLine("Looks like you win this round!");
