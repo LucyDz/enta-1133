@@ -26,6 +26,10 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
             return playerName;
         }
+        public string FetchPlayerName()
+        {
+            return playerName;
+        }
 
 
         internal int FetchPlayerScore() // trying to make a way to bring the score to another Class

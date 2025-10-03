@@ -14,10 +14,13 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         Player cpu = new Player();
 
         //created variable to store players roll
-        int playerRoll = 0;
+        int playerRoll = -1;
 
         //created variable to store cpu roll
         int cpuRoll = 0;
+
+        // created bool to check if its the players turn or not
+        bool playerTurnTrue;
 
         internal void Play() 
         {
@@ -45,30 +48,31 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             //0 is heads so the GameManager calls the cpu turn first
             if (flipResult == 0)
             {
+                
                 Console.WriteLine("");
                 Console.WriteLine("Heads!");
                 Console.WriteLine("");
                 Console.WriteLine("It's my turn first...");
                 CpuTurn();
-                //Console.WriteLine("");
-                //Console.WriteLine("It's now your turn...");
-                PlayerTurn();
+                playerTurnTrue = false;
+                NextTurn();
                 ScoreCheck();
             }
             //1 is tails so the GameManager calls the players turn first
             else if (flipResult == 1)
             {
+                
                 Console.WriteLine("");
                 Console.WriteLine("Tails!");
                 Console.WriteLine("");
                 Console.WriteLine("You go first...");
                 PlayerTurn();
-                Console.WriteLine("");
-                Console.WriteLine("It's now my turn...");
-                CpuTurn();
+                playerTurnTrue = true;
+                NextTurn();
                 ScoreCheck();
             }
             return flipResult;
+            
         }
         internal void PlayerTurn()
         {
@@ -82,42 +86,23 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             string dieInput = Console.ReadLine();
             Die die = new Die();
 
+            // validate input
+
+            //string validInput = ""; //to do 
             
-            // if statements to call each possible die choice
-            if (dieInput == "d6")
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Rolling your d6...");
-                playerRoll = die.d6(); // calls d6 from Die Class
-            }
 
-            else if (dieInput == "d8")
+            playerRoll = die.GetRollFromName(dieInput);
+            while (playerRoll <= 0)
             {
-                Console.WriteLine("");
-                Console.WriteLine("Rolling your d8...");
-                playerRoll = die.d8(); // calls d8 from Die Class
-            }
-
-            else if (dieInput == "d12")
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Rolling your d12...");
-                playerRoll = die.d12(); // calls d12 from Die Class
-            }
-
-            else if (dieInput == "d20")
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Rolling your d20...");
-                playerRoll = die.d20(); // calls d20 from Die Class
-            }
-            else 
-            { 
+              
                 Console.WriteLine("please input a valid dice"); // asks them to pick again if the typed something else
-                PlayerTurn();
+                dieInput = Console.ReadLine();
+                playerRoll = die.GetRollFromName(dieInput);
             }
+            Console.WriteLine("Rolling your " + dieInput + "...");
             // roll result printed
-                Console.WriteLine("Your " + dieInput + " rolled " + playerRoll + " !");     
+            Console.WriteLine("Your " + dieInput + " rolled " + playerRoll + " !");
+            return;
         }
         internal void CpuTurn()
         {
@@ -133,28 +118,28 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             {
                 Console.WriteLine("");
                 Console.WriteLine("I'll roll my d6...");
-                cpuRoll = die.d6(); // calls d6 from Die Class
+                cpuRoll = die.Roll(6); // calls d6 from Die Class
                 Console.WriteLine("My d6 rolled " + cpuRoll + " !");
             }
             else if (diceChoice == 2)
             {
                 Console.WriteLine("");
                 Console.WriteLine("I'll roll my d8...");
-                cpuRoll = die.d8(); // calls d8 from Die Class
+                cpuRoll = die.Roll(8); // calls d8 from Die Class
                 Console.WriteLine("My d8 rolled " + cpuRoll + " !");
             }
             else if (diceChoice == 3)
             {
                 Console.WriteLine("");
                 Console.WriteLine("I'll roll my d12...");
-                cpuRoll = die.d12(); // calls d12 from Die Class
+                cpuRoll = die.Roll(12); // calls d12 from Die Class
                 Console.WriteLine("My d12 rolled " + cpuRoll + " !");
             }
             else if (diceChoice == 4)
             {
                 Console.WriteLine("");
                 Console.WriteLine("I'll roll my d20...");
-                cpuRoll = die.d20(); // calls d20 from Die Class
+                cpuRoll = die.Roll(20); // calls d20 from Die Class
                 Console.WriteLine("My d20 rolled " + cpuRoll + " !");
             }
 
@@ -173,19 +158,23 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 user.FetchPlayerScore();// trying to fetch the scores from the Player Classes here but not sure what to do with them afterwards
                 user.playerScore++; //just added to GameManager stored score instead
             }
+            else
+            {
+                Console.WriteLine("It's a tie! lets roll again...");
+            }
 
-            //scoreboard display
-            Console.WriteLine("");
+                //scoreboard display
+                Console.WriteLine("");
             Console.WriteLine("=============================");
             Console.WriteLine("         SCOREBOARD          ");
             Console.WriteLine("         Lucy: " + cpu.playerScore);
-            Console.WriteLine("         You: " + user.playerScore);
+            Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
             Console.WriteLine("=============================");
 
             //if statement to write a line depending on who won the round
             if (cpu.playerScore > user.playerScore)
             {
-                Console.WriteLine("");   
+                Console.WriteLine("");
                 Console.WriteLine("Looks like I win this round!");
             }
             else if (cpu.playerScore < user.playerScore)
@@ -193,10 +182,49 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("");
                 Console.WriteLine("Looks like you win this round!");
             }
+            ContinueGame();
+        }
+        internal void NextTurn()
+        {
+            if (playerTurnTrue = true)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("It's now my turn...");
+                
+                CpuTurn();
+                playerTurnTrue = false;
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("It's now your turn...");
+                
+                PlayerTurn();
+                playerTurnTrue = true;
+            }
+        }
+        internal void ContinueGame()
+        {
+             
 
-            //outro message
             Console.WriteLine("");
-            Console.WriteLine("Thanks for playing my game!");
+            Console.WriteLine("Good round! want to play another?");
+            Console.WriteLine("Type Y for yes, or N for no");
+
+            string continueInput = Console.ReadLine();
+
+            if (continueInput != "N")
+            {
+                Console.WriteLine("Alright " + user.FetchPlayerName() + " let's play another round!!");
+                NextTurn();
+                ScoreCheck();
+            }
+            else
+            {
+                //outro message
+                Console.WriteLine("");
+                Console.WriteLine("Thanks for playing my game!");
+            }
         }
     }
 } 

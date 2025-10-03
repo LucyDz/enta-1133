@@ -11,23 +11,30 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         //creates a random instance so each roll is different
         private Random random = new Random();
 
+        private string[] diceNames = new[] {"d6", "d8", "d12", "d20"};
+        private int[] sidesValue = new[] {6, 8, 12, 20};
 
-        internal int d6() // rolls a d6 
+        internal int GetRollFromName(string givenName)
         {
-            return random.Next(1, 7);
+            int indexOfDice = -1;
+            for (int i = 0; i < diceNames.Length; i++)
+            {
+                if (diceNames[i] == givenName)
+                {
+                    indexOfDice = i;
+                    break;
+                }
+            }
+            if (indexOfDice == -1)
+                return -1;
 
+            return random.Next(1, sidesValue[indexOfDice] + 1); // need + 1 for random exclusive
         }
-        internal int d8() // rolls a d8 
+        internal int Roll(int faces)
         {
-            return random.Next(1, 9);
-        }
-        internal int d12() // rolls a d12 
-        {
-            return random.Next(1, 13);
-        }
-        internal int d20() // rolls a d20
-        {
-            return random.Next(1, 21);
+            return random.Next(1, faces + 1);
         }
     }
+
+
 }
