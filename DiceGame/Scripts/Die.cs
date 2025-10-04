@@ -31,11 +31,15 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
             return random.Next(1, sidesValue[indexOfDice] + 1); // need + 1 for random exclusive
         }
+        //still confused about how to read above function but understand how it works mostly
+        //couldnt figure out how to use the same method for the cpu and its random choice so it is just uses if else
         internal int Roll(int faces)
         {
             return random.Next(1, faces + 1);
         }
     }
 
-
+    //wanted to use a list to be able to take away dice and have the game end when the players are out of dice, but was too nervous to try that with the array stuff already set up
+    //wanted to make it so that the player can roll 2 dice at a time with more dice at their disposal but didn't know how/ran out of time
+    //wanted to make a snakeeyes or crit mechaninic that made a round win worth more than 1 point, or minus 1 point from opponent but didn't know how/ran out of time
 }

@@ -8,13 +8,13 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 {
     internal class Player
     {
+        //setting score, rolls, name, and if they want to play variables
         public int recentRoll = 0;
         public int playerScore = 0;
-        string playerName = "Player"; // sets player name to "Player" by default just to instantiate it out here
-                                      // wanted to bring this name so it could be put on the scoreboard at the end of a round but couldn't figure it out
+        string playerName = "Player"; // sets player name to "Player" by default just to instantiate it out here                                
         public bool isplaying;
-        public bool IsPlaying => isplaying;
-        internal string GetPlayerName()
+        public bool IsPlaying => isplaying; // so that the isplaying variable can be called in GameManager (had help with this)
+        internal string GetPlayerName() // asks player to enter their name
         {
 
 
@@ -28,24 +28,11 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
             return playerName;
         }
-        public string FetchPlayerName()
+        public string FetchPlayerName()// gets player name so that it can be used in scoreboard
         {
             return playerName;
         }
-
-
-        internal int FetchPlayerScore() // trying to make a way to bring the score to another Class
-        {
-            return playerScore;
-        }
-        internal void InitializePlayerScore()
-        {
-            // set playerScore to 0 because they start with nothing
-            playerScore = 0;
-        }
-        // couldn't figure out how to make another GameManager Class call these scores and be able to add to them. So I just had different variables store the scores in the GameManager...
-
-        internal void ReadyToPlay()
+        internal void ReadyToPlay()// explains rules and asks if the player is ready to play
         {
             Console.WriteLine("We will both be given a choice of 1 out of 4 dice to roll against eachother");
             Console.WriteLine("The player with the higher roll wins the round");
@@ -57,16 +44,14 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
             if (readyInput != "N" && readyInput != "n")
             {
-                
                 Console.WriteLine("Alright " + playerName + ", Let's play!");
                 isplaying = true;
-
             }
             else
             {
-                //outro message
                 isplaying = false;
             }
         }
+        // wanted to have inventory of dice and also powerups that allow you to steal the roll of the opponent once per match but didn't know how/ran out of time
     }
 }

@@ -38,7 +38,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             user.ReadyToPlay();
 
             
-            if (user.IsPlaying)
+            if (user.IsPlaying)//checks if they are ready to play and continues if they are
             {
                 Coinflip();
             }
@@ -91,7 +91,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             return flipResult;
             
         }
-        internal void PlayerTurn()
+        internal void PlayerTurn() // does player's turn
         {
            
             //player gets dice options
@@ -103,12 +103,8 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             string dieInput = Console.ReadLine();
             Die die = new Die();
 
-            // validate input
-
-            //string validInput = ""; //to do 
-            
-
-            playerRoll = die.GetRollFromName(dieInput);
+          
+            playerRoll = die.GetRollFromName(dieInput); //feeds their input to arrays in Die class
             while (playerRoll <= 0)
             {
               
@@ -117,8 +113,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 playerRoll = die.GetRollFromName(dieInput);
             }
             Console.WriteLine("Rolling your " + dieInput + "...");
-            // roll result printed
-            Console.WriteLine("Your " + dieInput + " rolled " + playerRoll + " !");
+            Console.WriteLine("Your " + dieInput + " rolled " + playerRoll + " !"); // roll result printed
             return;
         }
         internal void CpuTurn()
@@ -160,7 +155,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("My d20 rolled " + cpuRoll + " !");
             }
 
-        }
+        } // does cpu's turn
         internal void ScoreCheck() // creating a function to check the score and show a scoreboard
         {
             Console.WriteLine("");
@@ -252,7 +247,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 PlayerTurn();
                 playerTurnTrue = true;
             }
-        }
+        }// allows the next player to go based off of who went last
         internal void ContinueGame()
         {
              
@@ -276,9 +271,11 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine(""); 
                 Console.WriteLine("Thats okay...");
                 Console.WriteLine("Thanks for playing my game!");
+                Console.WriteLine("Goodbye");
+                Console.WriteLine("");
             }
-        }
-        internal void Rematch()
+        }// asks if player wants to continue after each round
+        internal void Rematch() // asks for rematch after one player wins
         {
             Console.WriteLine("");
             Console.WriteLine("How about a rematch?");
