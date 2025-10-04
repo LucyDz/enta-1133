@@ -6,117 +6,299 @@ using System.Threading.Tasks;
 
 namespace GD14_1133_DiceGame_Lucy.Scripts
 {
-    internal class DieRoller
-    { 
-        // created random class instance.
-        Random Random = new Random();
-
-        internal void Roll()
-        {
-            int d6 = Random.Next(1, 7); //created random number roller for d6 die.
-            int d8 = Random.Next(1, 9); //created random number roller for d8 die.
-            int d12 = Random.Next(1, 13); //created random number roller for d12 die.
-            int d20 = Random.Next(1, 21); //created random number roller for d20 die.
-            int total = d6 + d8 + d12 + d20; // created total sum counter.
-
-            //printed roll outcomes.
-            Console.WriteLine("Your d6 result is " + d6 + "!");
-            Console.WriteLine("Your d8 result is " + d8 + "!");
-            Console.WriteLine("Your d12 result is " + d12 + "!");
-            Console.WriteLine("Your d20 result is " + d20 + "!");
-
-            //printed total outcome.
-            Console.WriteLine("Your total sum is " + total + "!");
-        }
-    
-    }
-    internal class Operators
-    {
-        //created function to show examples of Arithmetic Operators.
-        internal void Arithmetics()
-        {
-            int a = 1;
-            int b = 2;
-            int c = 4;
-            int d = 5;
-
-            //explained what each operator does. 
-            Console.WriteLine("");
-            Console.WriteLine("I will now explain what operators do and give examples");
-            Console.WriteLine("The operators (+,-,++,--,*,/, and %) function as follows");
-            Console.WriteLine(" + adds two integers together");
-            Console.WriteLine(" - subtracts an integer from the other");
-            Console.WriteLine(" ++ increases an integer's value by 1");
-            Console.WriteLine(" -- decreases an integer's value by 1");
-            Console.WriteLine(" * multiplies two integers together");
-            Console.WriteLine(" / divides one integer by the other");
-            Console.WriteLine("");
-            
-            //performed examples of each operator.
-            Console.WriteLine("I will now show some examples");
-           
-            Console.WriteLine("");
-            Console.WriteLine("lets use + to create the sum of 1 + 2");
-            Console.WriteLine(a + b);
-            Console.WriteLine("our result was 3");
-           
-            Console.WriteLine("");
-            Console.WriteLine("lets use - to subtract 1 from 2");
-            Console.WriteLine(b - a);
-            Console.WriteLine("our result was 1");
-            
-            Console.WriteLine("");
-            Console.WriteLine("lets use ++ to increase 2 by one increment");
-            Console.WriteLine(++b);
-            Console.WriteLine("our result was 3");
-           
-            Console.WriteLine("");
-            Console.WriteLine("lets use -- to decrease 3 by one increment");
-            Console.WriteLine(--b);
-            Console.WriteLine("our result was 2");
-           
-            Console.WriteLine("");
-            Console.WriteLine("lets use * to multiply 2 by 2");
-            Console.WriteLine(b * b);
-            Console.WriteLine("our result was 4");
-
-            Console.WriteLine("");
-            Console.WriteLine("lets use / to divide 2 by 1");
-            Console.WriteLine(b / a);
-            Console.WriteLine("our result was 2");
-
-            Console.WriteLine("");
-            Console.WriteLine("lets use % to find the remainder of 5 - (5 / 4) x 4");
-            Console.WriteLine(d % c);
-            Console.WriteLine("our result is 1 because 'int' variables ignore decimal values");
-
-        }   
-
-    }
-
-
-
     internal class GameManager
     {
-        internal void Play()
+        //setting new player and cpu
+        Player user = new Player();
+
+        Player cpu = new Player();
+
+        //created variable to store players roll
+        int playerRoll = -1;
+
+        //created variable to store cpu roll
+        int cpuRoll = 0;
+
+        // created bool to check if its the players turn or not
+        bool playerTurnTrue;
+        
+
+
+
+        internal void Play() 
         {
             //welcome message.
-            Console.WriteLine("Welcome to Dice Game! My name is Lucy and today is 2025-09-18");
+            Console.WriteLine("=============================================================");
+            Console.WriteLine("Welcome to Dice Game! My name is Lucy and today is 2025-10-03");
+            Console.WriteLine("=============================================================");
             Console.WriteLine("");
 
-            //created an instance to call DieRoller to GameManager.
-            DieRoller DieRollerInstance = new DieRoller();
+            //calling function to get players info
+            user.GetPlayerName();
+            user.ReadyToPlay();
 
-            //called Roll function from within DieRollerInstance Class.
-            DieRollerInstance.Roll();
+            
+            if (user.IsPlaying)//checks if they are ready to play and continues if they are
+            {
+                Coinflip();
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Thanks for playing my game!");
+            }
 
-            //instantiated and called Operatorinstance to run Arithmetics.
-            Operators operatorinstance = new Operators();
-            operatorinstance.Arithmetics();
+        }
+        public int Coinflip() // decides who goes first
+        {
+            //explaining the coinflip to decide first
+            Console.WriteLine(""); 
+            Console.WriteLine("Lets flip a coin to see who goes first");
+            Console.WriteLine("If it's heads, I'll go first, if it's tails, you will go first.");
 
-            //goodbye message.
+            // making the computer pick 0 or 1
+            Random flip = new Random();
+            int flipResult = flip.Next(0,2);
+
+            
+
+            //0 is heads so the GameManager calls the cpu turn first
+            if (flipResult == 0)
+            {
+                
+                Console.WriteLine("");
+                Console.WriteLine("Heads!");
+                Console.WriteLine("");
+                Console.WriteLine("It's my turn first...");
+                CpuTurn();
+                playerTurnTrue = false;
+                NextTurn();
+                ScoreCheck();
+            }
+            //1 is tails so the GameManager calls the players turn first
+            else if (flipResult == 1)
+            {
+                
+                Console.WriteLine("");
+                Console.WriteLine("Tails!");
+                Console.WriteLine("");
+                Console.WriteLine("You go first...");
+                PlayerTurn();
+                playerTurnTrue = true;
+                NextTurn();
+                ScoreCheck();
+            }
+            return flipResult;
+            
+        }
+        internal void PlayerTurn() // does player's turn
+        {
+           
+            //player gets dice options
             Console.WriteLine("");
-            Console.WriteLine("Thank you for rolling and viewing! Goodbye.");
+            Console.WriteLine("Please choose a dice to roll");
+            Console.WriteLine("Your choices are; d6, d8, d12, or d20");
+            
+            //player enters which die they would like to roll
+            string dieInput = Console.ReadLine();
+            Die die = new Die();
+
+          
+            playerRoll = die.GetRollFromName(dieInput); //feeds their input to arrays in Die class
+            while (playerRoll <= 0)
+            {
+              
+                Console.WriteLine("please input a valid dice"); // asks them to pick again if the typed something else
+                dieInput = Console.ReadLine();
+                playerRoll = die.GetRollFromName(dieInput);
+            }
+            Console.WriteLine("Rolling your " + dieInput + "...");
+            Console.WriteLine("Your " + dieInput + " rolled " + playerRoll + " !"); // roll result printed
+            return;
+        }
+        internal void CpuTurn()
+        {
+            //created a new die instance
+            Die die = new Die();
+
+            //making the computer pick a random number from 1 - 4
+            Random diceRandom = new Random();
+            int diceChoice = diceRandom.Next(1, 5);
+
+            //making the chosen number align with and roll one of the dice
+            if (diceChoice == 1) 
+            {
+                Console.WriteLine("");
+                Console.WriteLine("I'll roll my d6...");
+                cpuRoll = die.Roll(6); // calls d6 from Die Class
+                Console.WriteLine("My d6 rolled " + cpuRoll + " !");
+            }
+            else if (diceChoice == 2)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("I'll roll my d8...");
+                cpuRoll = die.Roll(8); // calls d8 from Die Class
+                Console.WriteLine("My d8 rolled " + cpuRoll + " !");
+            }
+            else if (diceChoice == 3)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("I'll roll my d12...");
+                cpuRoll = die.Roll(12); // calls d12 from Die Class
+                Console.WriteLine("My d12 rolled " + cpuRoll + " !");
+            }
+            else if (diceChoice == 4)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("I'll roll my d20...");
+                cpuRoll = die.Roll(20); // calls d20 from Die Class
+                Console.WriteLine("My d20 rolled " + cpuRoll + " !");
+            }
+
+        } // does cpu's turn
+        internal void ScoreCheck() // creating a function to check the score and show a scoreboard
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Lets see who won that round!");
+            // decides who won based on higher roll
+            if (cpuRoll > playerRoll) 
+            { 
+                cpu.playerScore++; 
+            }
+            else if (cpuRoll < playerRoll)
+            {
+                user.playerScore++; 
+            }
+            else
+            {
+                Console.WriteLine("It's a tie! no points won.");
+            }
+
+                //scoreboard display
+                Console.WriteLine("");
+            Console.WriteLine("=============================");
+            Console.WriteLine("         SCOREBOARD          ");
+            Console.WriteLine("         Lucy: " + cpu.playerScore);
+            Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
+            Console.WriteLine("=============================");
+
+            //if statement to write a line depending on who won the round
+            if (cpu.playerScore > user.playerScore)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Looks like I win this round!");
+            }
+            else if (cpu.playerScore < user.playerScore)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Looks like you win this round!");
+            }
+
+            // checks if either player has reached 5 points or not and continues if they have not
+            if (cpu.playerScore >= 5)
+            {
+                Console.WriteLine("");    
+                Console.WriteLine("Lucy wins!");
+                Console.WriteLine("Better luck next match");
+                Console.WriteLine("");
+                Console.WriteLine("=============================");
+                Console.WriteLine("         FINAL SCORE         ");
+                Console.WriteLine("         Lucy: " + cpu.playerScore);
+                Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
+                Console.WriteLine("=============================");
+                Console.WriteLine("");
+                Rematch();
+            }
+            else if (user.playerScore >= 5)
+            {
+                Console.WriteLine("");
+                Console.WriteLine(user.FetchPlayerName() + " wins!");
+                Console.WriteLine("What a match!");
+                Console.WriteLine("");
+                Console.WriteLine("=============================");
+                Console.WriteLine("         FINAL SCORE         ");
+                Console.WriteLine("         Lucy: " + cpu.playerScore);
+                Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
+                Console.WriteLine("=============================");
+                Console.WriteLine("");
+                Rematch();
+            }
+            else
+            {
+                ContinueGame();
+            }
+            
+        }
+        internal void NextTurn()
+        {
+            if (playerTurnTrue == true)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("It's now my turn...");
+                
+                CpuTurn();
+                playerTurnTrue = false;
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("It's now your turn...");
+                
+                PlayerTurn();
+                playerTurnTrue = true;
+            }
+        }// allows the next player to go based off of who went last
+        internal void ContinueGame()
+        {
+             
+
+            Console.WriteLine("");
+            Console.WriteLine("Good round! want to play another?");
+            Console.WriteLine("Type 'Y' for yes, or 'N' for no");
+
+            string continueInput = Console.ReadLine();
+
+            if (continueInput != "N" && continueInput != "n")
+            {
+                Console.WriteLine("Alright " + user.FetchPlayerName() + " let's play another round!!");
+                NextTurn();
+                NextTurn();
+                ScoreCheck();
+            }
+            else
+            {
+                //outro message
+                Console.WriteLine(""); 
+                Console.WriteLine("Thats okay...");
+                Console.WriteLine("Thanks for playing my game!");
+                Console.WriteLine("Goodbye");
+                Console.WriteLine("");
+            }
+        }// asks if player wants to continue after each round
+        internal void Rematch() // asks for rematch after one player wins
+        {
+            Console.WriteLine("");
+            Console.WriteLine("How about a rematch?");
+            Console.WriteLine("Type 'Y' for yes, or 'N' for no");
+            
+            string rematchInput = Console.ReadLine();
+
+            if (rematchInput != "N" && rematchInput != "n")
+            {
+                Console.WriteLine("Alright " + user.FetchPlayerName() + " let's play another match!!");
+                cpu.playerScore = 0;
+                user.playerScore = 0;
+                Coinflip();
+            }
+            else
+            {
+                //outro message
+                Console.WriteLine("");
+                Console.WriteLine("Thats okay...");
+                Console.WriteLine("Thanks for playing my game!");
+                Console.WriteLine("Goodbye");
+                Console.WriteLine("");
+            }
         }
     }
-}
+} 
