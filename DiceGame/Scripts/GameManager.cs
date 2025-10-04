@@ -21,18 +21,35 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
         // created bool to check if its the players turn or not
         bool playerTurnTrue;
+        
+
+
 
         internal void Play() 
         {
             //welcome message.
-            Console.WriteLine("Welcome to Dice Game! My name is Lucy and today is 2025-09-26");
+            Console.WriteLine("=============================================================");
+            Console.WriteLine("Welcome to Dice Game! My name is Lucy and today is 2025-10-03");
+            Console.WriteLine("=============================================================");
             Console.WriteLine("");
 
             //calling function to get players info
             user.GetPlayerName();
-            Coinflip();
+            user.ReadyToPlay();
+
+            
+            if (user.IsPlaying)
+            {
+                Coinflip();
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Thanks for playing my game!");
+            }
+
         }
-        internal int Coinflip() // decides who goes first
+        public int Coinflip() // decides who goes first
         {
             //explaining the coinflip to decide first
             Console.WriteLine(""); 
@@ -148,19 +165,18 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         {
             Console.WriteLine("");
             Console.WriteLine("Lets see who won that round!");
-            if (cpuRoll > playerRoll)
-            {
-                cpu.FetchPlayerScore();// trying to fetch the scores from the Player Classes here but not sure what to do with them afterwards
-                cpu.playerScore++; //just added to GameManager stored score instead
+            // decides who won based on higher roll
+            if (cpuRoll > playerRoll) 
+            { 
+                cpu.playerScore++; 
             }
             else if (cpuRoll < playerRoll)
             {
-                user.FetchPlayerScore();// trying to fetch the scores from the Player Classes here but not sure what to do with them afterwards
-                user.playerScore++; //just added to GameManager stored score instead
+                user.playerScore++; 
             }
             else
             {
-                Console.WriteLine("It's a tie! lets roll again...");
+                Console.WriteLine("It's a tie! no points won.");
             }
 
                 //scoreboard display
@@ -182,11 +198,45 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("");
                 Console.WriteLine("Looks like you win this round!");
             }
-            ContinueGame();
+
+            // checks if either player has reached 5 points or not and continues if they have not
+            if (cpu.playerScore >= 5)
+            {
+                Console.WriteLine("");    
+                Console.WriteLine("Lucy wins!");
+                Console.WriteLine("Better luck next match");
+                Console.WriteLine("");
+                Console.WriteLine("=============================");
+                Console.WriteLine("         FINAL SCORE         ");
+                Console.WriteLine("         Lucy: " + cpu.playerScore);
+                Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
+                Console.WriteLine("=============================");
+                Console.WriteLine("");
+                Rematch();
+            }
+            else if (user.playerScore >= 5)
+            {
+                Console.WriteLine("");
+                Console.WriteLine(user.FetchPlayerName() + " wins!");
+                Console.WriteLine("What a match!");
+                Console.WriteLine("");
+                Console.WriteLine("=============================");
+                Console.WriteLine("         FINAL SCORE         ");
+                Console.WriteLine("         Lucy: " + cpu.playerScore);
+                Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
+                Console.WriteLine("=============================");
+                Console.WriteLine("");
+                Rematch();
+            }
+            else
+            {
+                ContinueGame();
+            }
+            
         }
         internal void NextTurn()
         {
-            if (playerTurnTrue = true)
+            if (playerTurnTrue == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("It's now my turn...");
@@ -209,21 +259,48 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
             Console.WriteLine("");
             Console.WriteLine("Good round! want to play another?");
-            Console.WriteLine("Type Y for yes, or N for no");
+            Console.WriteLine("Type 'Y' for yes, or 'N' for no");
 
             string continueInput = Console.ReadLine();
 
-            if (continueInput != "N")
+            if (continueInput != "N" && continueInput != "n")
             {
                 Console.WriteLine("Alright " + user.FetchPlayerName() + " let's play another round!!");
+                NextTurn();
                 NextTurn();
                 ScoreCheck();
             }
             else
             {
                 //outro message
-                Console.WriteLine("");
+                Console.WriteLine(""); 
+                Console.WriteLine("Thats okay...");
                 Console.WriteLine("Thanks for playing my game!");
+            }
+        }
+        internal void Rematch()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("How about a rematch?");
+            Console.WriteLine("Type 'Y' for yes, or 'N' for no");
+            
+            string rematchInput = Console.ReadLine();
+
+            if (rematchInput != "N" && rematchInput != "n")
+            {
+                Console.WriteLine("Alright " + user.FetchPlayerName() + " let's play another match!!");
+                cpu.playerScore = 0;
+                user.playerScore = 0;
+                Coinflip();
+            }
+            else
+            {
+                //outro message
+                Console.WriteLine("");
+                Console.WriteLine("Thats okay...");
+                Console.WriteLine("Thanks for playing my game!");
+                Console.WriteLine("Goodbye");
+                Console.WriteLine("");
             }
         }
     }
