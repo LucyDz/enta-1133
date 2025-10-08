@@ -7,8 +7,10 @@ namespace GD14_1133_DiceGame_Lucy
         static void Main(string[] args)
 
         {// Created instance to call the game manager
-            GameManager manager = new GameManager();
-            manager.Play();
+            //GameManager manager = new GameManager();
+            //manager.Play();
+            MapGen house = new MapGen();
+            house.GenerateHouse();
         }
     }
 }

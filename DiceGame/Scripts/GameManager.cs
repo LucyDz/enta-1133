@@ -27,6 +27,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
         internal void Play() 
         {
+            
             //welcome message.
             Console.WriteLine("=============================================================");
             Console.WriteLine("Welcome to Dice Game! My name is Lucy and today is 2025-10-03");
