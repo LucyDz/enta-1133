@@ -30,10 +30,10 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             
             //welcome message.
             Console.WriteLine("=============================================================");
-            Console.WriteLine("Welcome to Dice Game! My name is Lucy and today is 2025-10-03");
+            Console.WriteLine("                       COMBAT STARTS!                        ");
             Console.WriteLine("=============================================================");
             Console.WriteLine("");
-
+            Console.ForegroundColor = ConsoleColor.White;
             //calling function to get players info
             user.GetPlayerName();
             user.ReadyToPlay();
@@ -53,9 +53,9 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         public int Coinflip() // decides who goes first
         {
             //explaining the coinflip to decide first
-            Console.WriteLine(""); 
-            Console.WriteLine("Lets flip a coin to see who goes first");
-            Console.WriteLine("If it's heads, I'll go first, if it's tails, you will go first.");
+            //Console.WriteLine(""); 
+           //Console.WriteLine("Lets flip a coin to see who goes first");
+            //Console.WriteLine("If it's heads, I'll go first, if it's tails, you will go first.");
 
             // making the computer pick 0 or 1
             Random flip = new Random();
@@ -67,10 +67,10 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             if (flipResult == 0)
             {
                 
+               // Console.WriteLine("");
+                //Console.WriteLine("Heads!");
                 Console.WriteLine("");
-                Console.WriteLine("Heads!");
-                Console.WriteLine("");
-                Console.WriteLine("It's my turn first...");
+                Console.WriteLine("The Ghost moves first...");
                 CpuTurn();
                 playerTurnTrue = false;
                 NextTurn();
@@ -80,10 +80,10 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             else if (flipResult == 1)
             {
                 
+                //Console.WriteLine("");
+                //Console.WriteLine("Tails!");
                 Console.WriteLine("");
-                Console.WriteLine("Tails!");
-                Console.WriteLine("");
-                Console.WriteLine("You go first...");
+                Console.WriteLine("You move first...");
                 PlayerTurn();
                 playerTurnTrue = true;
                 NextTurn();
@@ -130,34 +130,34 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             if (diceChoice == 1) 
             {
                 Console.WriteLine("");
-                Console.WriteLine("I'll roll my d6...");
+                Console.WriteLine("The Ghost rolls a d6...");
                 cpuRoll = die.Roll(6); // calls d6 from Die Class
-                Console.WriteLine("My d6 rolled " + cpuRoll + " !");
+                Console.WriteLine("Its d6 rolled " + cpuRoll + " !");
             }
             else if (diceChoice == 2)
             {
                 Console.WriteLine("");
-                Console.WriteLine("I'll roll my d8...");
+                Console.WriteLine("The Ghost rolls a d8...");
                 cpuRoll = die.Roll(8); // calls d8 from Die Class
-                Console.WriteLine("My d8 rolled " + cpuRoll + " !");
+                Console.WriteLine("Its d8 rolled " + cpuRoll + " !");
             }
             else if (diceChoice == 3)
             {
                 Console.WriteLine("");
-                Console.WriteLine("I'll roll my d12...");
+                Console.WriteLine("The Ghost rolls a d12...");
                 cpuRoll = die.Roll(12); // calls d12 from Die Class
-                Console.WriteLine("My d12 rolled " + cpuRoll + " !");
+                Console.WriteLine("Its d12 rolled " + cpuRoll + " !");
             }
             else if (diceChoice == 4)
             {
                 Console.WriteLine("");
-                Console.WriteLine("I'll roll my d20...");
+                Console.WriteLine("The Ghost rolls a d20...");
                 cpuRoll = die.Roll(20); // calls d20 from Die Class
-                Console.WriteLine("My d20 rolled " + cpuRoll + " !");
+                Console.WriteLine("Its d20 rolled " + cpuRoll + " !");
             }
 
         } // does cpu's turn
-        internal void ScoreCheck() // creating a function to check the score and show a scoreboard
+        internal bool ScoreCheck() // creating a function to check the score and show a scoreboard
         {
             Console.WriteLine("");
             Console.WriteLine("Lets see who won that round!");
@@ -179,7 +179,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("");
             Console.WriteLine("=============================");
             Console.WriteLine("         SCOREBOARD          ");
-            Console.WriteLine("         Lucy: " + cpu.playerScore);
+            Console.WriteLine("         Ghost: " + cpu.playerScore);
             Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
             Console.WriteLine("=============================");
 
@@ -187,46 +187,61 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             if (cpu.playerScore > user.playerScore)
             {
                 Console.WriteLine("");
-                Console.WriteLine("Looks like I win this round!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The Ghost wins this round!");
+                Console.WriteLine("Your conciousness fades for a brief moment");
+                Console.ForegroundColor = ConsoleColor.White;
             }
             else if (cpu.playerScore < user.playerScore)
             {
                 Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Looks like you win this round!");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("The Ghost hisses at you");
+                
             }
 
             // checks if either player has reached 5 points or not and continues if they have not
             if (cpu.playerScore >= 5)
             {
-                Console.WriteLine("");    
-                Console.WriteLine("Lucy wins!");
-                Console.WriteLine("Better luck next match");
+                Console.WriteLine("");
+                Console.WriteLine("The Ghost wins!");
+                Console.WriteLine("You faint on the floor and lose consiousness");
                 Console.WriteLine("");
                 Console.WriteLine("=============================");
                 Console.WriteLine("         FINAL SCORE         ");
-                Console.WriteLine("         Lucy: " + cpu.playerScore);
+                Console.WriteLine("         Ghost: " + cpu.playerScore);
                 Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
                 Console.WriteLine("=============================");
                 Console.WriteLine("");
-                Rematch();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("               ('-.     _   .-')       ('-.                           (`-.      ('-.  _  .-')   \r\n              ( OO ).-.( '.( OO )_   _(  OO)                        _(OO  )_  _(  OO)( \\( -O )  \r\n  ,----.      / . --. / ,--.   ,--.)(,------.       .-'),-----. ,--(_/   ,. \\(,------.,------.  \r\n '  .-./-')   | \\-.  \\  |   `.'   |  |  .---'      ( OO'  .-.  '\\   \\   /(__/ |  .---'|   /`. ' \r\n |  |_( O- ).-'-'  |  | |         |  |  |          /   |  | |  | \\   \\ /   /  |  |    |  /  | | \r\n |  | .--, \\ \\| |_.'  | |  |'.'|  | (|  '--.       \\_) |  |\\|  |  \\   '   /, (|  '--. |  |_.' | \r\n(|  | '. (_/  |  .-.  | |  |   |  |  |  .--'         \\ |  | |  |   \\     /__) |  .--' |  .  '.' \r\n |  '--'  |   |  | |  | |  |   |  |  |  `---.         `'  '-'  '    \\   /     |  `---.|  |\\  \\  \r\n  `------'    `--' `--' `--'   `--'  `------'           `-----'      `-'      `------'`--' '--' \n");
+                // Rematch();
+                return false;
             }
             else if (user.playerScore >= 5)
             {
                 Console.WriteLine("");
                 Console.WriteLine(user.FetchPlayerName() + " wins!");
-                Console.WriteLine("What a match!");
+                Console.WriteLine("The Ghost disappears with a final hiss");
                 Console.WriteLine("");
                 Console.WriteLine("=============================");
                 Console.WriteLine("         FINAL SCORE         ");
-                Console.WriteLine("         Lucy: " + cpu.playerScore);
+                Console.WriteLine("         Ghost: " + cpu.playerScore);
                 Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
                 Console.WriteLine("=============================");
                 Console.WriteLine("");
-                Rematch();
+                //Rematch();
+                return true;
             }
             else
             {
-                ContinueGame();
+                //ContinueGame();
+                NextTurn();
+                NextTurn();
+                ScoreCheck();
+                return true;
             }
             
         }
@@ -235,7 +250,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             if (playerTurnTrue == true)
             {
                 Console.WriteLine("");
-                Console.WriteLine("It's now my turn...");
+                Console.WriteLine("It's now the Ghost's turn...");
                 
                 CpuTurn();
                 playerTurnTrue = false;

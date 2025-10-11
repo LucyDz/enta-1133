@@ -11,8 +11,8 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         //creates a random instance so each roll is different
         private Random random = new Random();
 
-        private string[] diceNames = new[] {"d6", "d8", "d12", "d20"};
-        private int[] sidesValue = new[] {6, 8, 12, 20};
+        private string[] diceNames = new[] { "d6", "d8", "d12", "d20" };
+        private int[] sidesValue = new[] { 6, 8, 12, 20 };
 
         // two arrays that correllate with each other
         internal int GetRollFromName(string givenName)
@@ -38,8 +38,6 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             return random.Next(1, faces + 1);
         }
     }
-
-    //wanted to use a list to be able to take away dice and have the game end when the players are out of dice, but was too nervous to try that with the array stuff already set up
-    //wanted to make it so that the player can roll 2 dice at a time with more dice at their disposal but didn't know how/ran out of time
-    //wanted to make a snakeeyes or crit mechaninic that made a round win worth more than 1 point, or minus 1 point from opponent but didn't know how/ran out of time
 }
+
+   

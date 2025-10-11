@@ -17,26 +17,29 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         public Room West { get; set; }
         public Room East { get; set; }
 
-        public void RoomDescription()
+        public virtual void RoomDescription()
         {
-            if (!WasVisited)
-            {
-                Console.WriteLine("You've already been in this room");
-            }
-            else
-            {
+            
+            
+                
 
-            }
         }
-        public void OnRoomEntered()
+        public virtual void OnRoomEntered()
         {
-            Console.WriteLine("You enter the next room...");
+            Console.WriteLine("You enter the room...\n\n");
+            if (WasVisited)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("\nYou've already been in this room\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            WasVisited = true;
         }
-        public void OnRoomSearched()
+        public virtual void OnRoomSearched()
         {
             Console.WriteLine("You search the room");
         }
-        public void OnRoomExit()
+        public virtual void OnRoomExit()
         {
             Console.WriteLine("You leave this room");
         }
@@ -54,12 +57,37 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             {
 
             }
+            public override void RoomDescription()
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("You emerge into a storage room...\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            public override void OnRoomSearched()
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("Couldn't figure out Inventory :(");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
         internal class EmptyRoom : Room
         {
             public EmptyRoom(int roomNumber, int row, int column) : base(roomNumber, row, column)
             {
 
+            }
+            public override void RoomDescription()
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("You emerge into an empty room...\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+            public override void OnRoomSearched()
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("There is nothing of use here...");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
@@ -68,6 +96,15 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             public CombatRoom(int roomNumber, int row, int column) : base(roomNumber, row, column)
             {
 
+            }
+            public override void RoomDescription()
+            {
+                GameManager manager = new GameManager();
+                
+                Console.WriteLine("You emerge into a cold and damp room...");
+                Console.WriteLine("A chill runs down your spine and a ghost attacks!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                manager.Play();
             }
         }
 
@@ -80,24 +117,24 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 
 
 
-        public void MoveRooms(int x, int y, string direction)
-        {
-            switch (direction)
-            {
-                case "north":
-                    break;
+        //public void MoveRooms(int x, int y, string direction)
+      //  {
+       //     switch (direction)
+         //   {
+           //     case "north":
+          //          break;
 
-                case "south":
-                    break;
+           //     case "south":
+            //        break;
 
-                case "west":
-                    break;
+             //   case "west":
+             //       break;
 
-                case "east":
-                    break;
+               // case "east":
+                 //   break;
 
-            }
-        }
+           // }
+       // }
 
 
 

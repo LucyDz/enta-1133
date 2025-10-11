@@ -34,23 +34,25 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         }
         internal void ReadyToPlay()// explains rules and asks if the player is ready to play
         {
-            Console.WriteLine("We will both be given a choice of 1 out of 4 dice to roll against eachother");
+            Console.WriteLine("You and the Ghost will both be given a choice of 1 out of 4 dice to roll against eachother");
             Console.WriteLine("The player with the higher roll wins the round");
+            Console.WriteLine("There will be a 50/50 chance of who goes first");
             Console.WriteLine("First to 5 rounds wins the match");
-            Console.WriteLine("Ready to play?");
-            Console.WriteLine("Type 'Y' for yes, or 'N' for no");
-            string readyInput = Console.ReadLine();
+            Console.WriteLine("Get ready...");
+            isplaying = true;
+            //Console.WriteLine("Type 'Y' for yes, or 'N' for no");
+            //string readyInput = Console.ReadLine();
 
 
-            if (readyInput != "N" && readyInput != "n")
-            {
-                Console.WriteLine("Alright " + playerName + ", Let's play!");
-                isplaying = true;
-            }
-            else
-            {
-                isplaying = false;
-            }
+            //if (readyInput != "N" && readyInput != "n")
+            //{
+               // Console.WriteLine("Alright " + playerName + ", Let's play!");
+                //isplaying = true;
+           // }
+           //else
+            //{
+               // isplaying = false;
+            //}
         }
         // wanted to have inventory of dice and also powerups that allow you to steal the roll of the opponent once per match but didn't know how/ran out of time
     }
