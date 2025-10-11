@@ -17,7 +17,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         public Room West { get; set; }
         public Room East { get; set; }
 
-        public virtual void RoomDescription()
+        public virtual void RoomDescription(GameManager manager)
         {
             
             
@@ -57,7 +57,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             {
 
             }
-            public override void RoomDescription()
+            public override void RoomDescription(GameManager manager)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("You emerge into a storage room...\n");
@@ -76,7 +76,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             {
 
             }
-            public override void RoomDescription()
+            public override void RoomDescription(GameManager manager)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("You emerge into an empty room...\n");
@@ -97,14 +97,15 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             {
 
             }
-            public override void RoomDescription()
+            public override void RoomDescription(GameManager manager)
             {
-                GameManager manager = new GameManager();
+                
                 
                 Console.WriteLine("You emerge into a cold and damp room...");
                 Console.WriteLine("A chill runs down your spine and a ghost attacks!");
                 Console.ForegroundColor = ConsoleColor.Red;
                 manager.Play();
+                manager.GetPlayer().AddRoom(this);
             }
         }
 

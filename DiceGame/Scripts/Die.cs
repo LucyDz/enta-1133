@@ -14,9 +14,19 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         private string[] diceNames = new[] { "d6", "d8", "d12", "d20" };
         private int[] sidesValue = new[] { 6, 8, 12, 20 };
 
+        public enum d
+        {
+            d6 = 6,
+            d8 = 8,
+        }
+
         // two arrays that correllate with each other
         internal int GetRollFromName(string givenName)
         {
+            
+
+
+
             int indexOfDice = -1;
             for (int i = 0; i < diceNames.Length; i++) //i starts at zero and goes up by one until it matches                                                     
             {

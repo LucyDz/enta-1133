@@ -8,6 +8,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 {
     internal class MapGen
     {
+        GameManager manager = new GameManager();
         public static void HouseMap(Room[,] house, Room playerRoom) // visualize player location
         {
             for (int i = 0; i < 3; i++)
@@ -26,6 +27,10 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
         }
         public void Start()
         {
+            //manager.GetPlayer().AddRoom();
+            //Player temp = manager.GetPlayer();
+            //temp.AddRoom()
+            //manager.Play();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("             ('-. .-.               .-')    .-') _          _  .-')                                      ('-.  _  .-')   \r\n            ( OO )  /              ( OO ). (  OO) )        ( \\( -O )                                   _(  OO)( \\( -O )  \r\n  ,----.    ,--. ,--. .-'),-----. (_)---\\_)/     '._        ,------.  .-'),-----.  ,--.      ,--.     (,------.,------.  \r\n '  .-./-') |  | |  |( OO'  .-.  '/    _ | |'--...__)       |   /`. '( OO'  .-.  ' |  |.-')  |  |.-')  |  .---'|   /`. ' \r\n |  |_( O- )|   .|  |/   |  | |  |\\  :` `. '--.  .--'       |  /  | |/   |  | |  | |  | OO ) |  | OO ) |  |    |  /  | | \r\n |  | .--, \\|       |\\_) |  |\\|  | '..`''.)   |  |          |  |_.' |\\_) |  |\\|  | |  |`-' | |  |`-' |(|  '--. |  |_.' | \r\n(|  | '. (_/|  .-.  |  \\ |  | |  |.-._)   \\   |  |          |  .  '.'  \\ |  | |  |(|  '---.'(|  '---.' |  .--' |  .  '.' \r\n |  '--'  | |  | |  |   `'  '-'  '\\       /   |  |          |  |\\  \\    `'  '-'  ' |      |  |      |  |  `---.|  |\\  \\  \r\n  `------'  `--' `--'     `-----'  `-----'    `--'          `--' '--'     `-----'  `------'  `------'  `------'`--' '--' ");
             Console.ForegroundColor = ConsoleColor.White;
@@ -88,7 +93,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             int randy = random.Next(0, 3);
             Room current = house[randy, randx];
             current.OnRoomEntered();
-            current.RoomDescription();
+            current.RoomDescription(manager);
             
             //exploring the house loop, can't figure out how to break it when the player dies
             bool isexploring = true;
@@ -111,7 +116,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                             current = current.North;
                             
                             current.OnRoomEntered();
-                            current.RoomDescription();
+                            current.RoomDescription(manager);
                         }
                         else 
                         {
@@ -125,7 +130,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                             current = current.South;
                             
                             current.OnRoomEntered();
-                            current.RoomDescription();
+                            current.RoomDescription(manager);
                         }
                         else
                         {
@@ -139,7 +144,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                             current = current.East;
                             
                             current.OnRoomEntered();
-                            current.RoomDescription();
+                            current.RoomDescription(manager);
                         }
                         else
                         {
@@ -153,7 +158,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                             current = current.West;
                             
                             current.OnRoomEntered();
-                            current.RoomDescription();
+                            current.RoomDescription(manager);
                         }
                         else
                         {

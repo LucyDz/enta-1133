@@ -10,7 +10,10 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
     {
         //setting new player and cpu
         Player user = new Player();
-
+        public Player GetPlayer()
+        {
+            return user;
+        }
         Player cpu = new Player();
 
         //created variable to store players roll
