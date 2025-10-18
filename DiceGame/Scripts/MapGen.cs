@@ -166,7 +166,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                         }
                         break;
                     case "search":
-                        current.OnRoomSearched();
+                        current.OnRoomSearched(manager);
 
                         break;
                 }

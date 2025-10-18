@@ -8,14 +8,16 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
 {
     internal class Player
     {
-        List<Room> roomCollection = new List<Room>();
-        public void AddRoom(Room Things)
-        {
-            roomCollection.Add(Things);
-        }
-        public void RemoveRoom(Room Things)
-        {
+        List<Items> inventory = new List<Items>();
+        internal List<Items> Inventory => inventory;
 
+        public void AddItem(Items Thing)
+        {
+            inventory.Add(Thing);
+        }
+        public void RemoveItem(Items Thing)
+        {
+            inventory.Remove(Thing);
         }
         //setting score, rolls, name, and if they want to play variables
         public int recentRoll = 0;

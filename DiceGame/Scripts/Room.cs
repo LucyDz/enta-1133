@@ -35,7 +35,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             }
             WasVisited = true;
         }
-        public virtual void OnRoomSearched()
+        public virtual void OnRoomSearched(GameManager manager)
         {
             Console.WriteLine("You search the room");
         }
@@ -63,10 +63,54 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("You emerge into a storage room...\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            public override void OnRoomSearched()
+            public override void OnRoomSearched(GameManager manager)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("Couldn't figure out Inventory :(");
+                Random randomloot = new Random();
+                int lootfound = randomloot.Next(0, 8);
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("\nYou search the room for anything of use...\n");
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                switch (lootfound)
+                {
+                    case 0:
+                        manager.GetPlayer().AddItem(new Items.Camera(false));                        
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 1:
+                        manager.GetPlayer().AddItem(new Items.Salt( false));
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 2:
+                        manager.GetPlayer().AddItem(new Items.Flashlight(false));
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 3:
+                        manager.GetPlayer().AddItem(new Items.Crucifix(false));
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 4:
+                        manager.GetPlayer().AddItem(new Items.Camera(true));
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 5:
+                        manager.GetPlayer().AddItem(new Items.Salt(true));
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 6:
+                        manager.GetPlayer().AddItem(new Items.Flashlight(true));
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 7:
+                        manager.GetPlayer().AddItem(new Items.Crucifix(true));
+                        manager.GetPlayer().Inventory[manager.GetPlayer().Inventory.Count - 1].OnPickup();
+                        break;
+                    case 8:
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("You find nothing of use");
+                        break;
+                       
+                }
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
@@ -83,7 +127,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.ForegroundColor = ConsoleColor.White;
             }
 
-            public override void OnRoomSearched()
+            public override void OnRoomSearched(GameManager manager)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("There is nothing of use here...");
@@ -105,7 +149,7 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("A chill runs down your spine and a ghost attacks!");
                 Console.ForegroundColor = ConsoleColor.Red;
                 manager.Play();
-                manager.GetPlayer().AddRoom(this);
+                
             }
         }
 
