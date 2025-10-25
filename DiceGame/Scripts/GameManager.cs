@@ -218,6 +218,8 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
                 Console.WriteLine("=============================");
                 Console.WriteLine("");
+                user.playerScore = 0;
+                cpu.playerScore = 0;
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("               ('-.     _   .-')       ('-.                           (`-.      ('-.  _  .-')   \r\n              ( OO ).-.( '.( OO )_   _(  OO)                        _(OO  )_  _(  OO)( \\( -O )  \r\n  ,----.      / . --. / ,--.   ,--.)(,------.       .-'),-----. ,--(_/   ,. \\(,------.,------.  \r\n '  .-./-')   | \\-.  \\  |   `.'   |  |  .---'      ( OO'  .-.  '\\   \\   /(__/ |  .---'|   /`. ' \r\n |  |_( O- ).-'-'  |  | |         |  |  |          /   |  | |  | \\   \\ /   /  |  |    |  /  | | \r\n |  | .--, \\ \\| |_.'  | |  |'.'|  | (|  '--.       \\_) |  |\\|  |  \\   '   /, (|  '--. |  |_.' | \r\n(|  | '. (_/  |  .-.  | |  |   |  |  |  .--'         \\ |  | |  |   \\     /__) |  .--' |  .  '.' \r\n |  '--'  |   |  | |  | |  |   |  |  |  `---.         `'  '-'  '    \\   /     |  `---.|  |\\  \\  \r\n  `------'    `--' `--' `--'   `--'  `------'           `-----'      `-'      `------'`--' '--' \n");
                 Console.Write("                      ______                     \r\n                   .-\"      \"-.                 \r\n                  /            \\                 \r\n                 |              |\r\n                 |,  .-.  .-.  ,|\r\n                 | )(__/  \\__)( |\r\n                 |/     /\\     \\|\r\n                 (_     ^^     _)\r\n                  \\__|IIIIII|__/              \r\n                   | \\IIIIII/ |             \r\n                   \\          /  \r\n                    `--------`\r\n");
@@ -238,6 +240,8 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
                 Console.WriteLine("         " + user.FetchPlayerName() + ": " + user.playerScore);
                 Console.WriteLine("=============================");
                 Console.WriteLine("");
+                user.playerScore = 0;
+                cpu.playerScore = 0;
                 //Rematch();
                 return true;
             }

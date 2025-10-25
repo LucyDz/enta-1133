@@ -38,6 +38,9 @@ namespace GD14_1133_DiceGame_Lucy.Scripts
             Console.WriteLine("You are a brave ghost hunter with a mission to document paranormal activity");
             Console.WriteLine("You must loot what you can and survive against the evils of the house");
             Console.WriteLine("Good Hunting...");
+            Console.WriteLine("\n\nPress Any Key\n");
+            Console.ReadKey();
+            Console.Clear();
             Console.WriteLine("\n\n\nYou enter into an old House");
             Console.WriteLine("Rumors say the place is Haunted\n\n");
             Room[,] house = new Room[3, 3];
